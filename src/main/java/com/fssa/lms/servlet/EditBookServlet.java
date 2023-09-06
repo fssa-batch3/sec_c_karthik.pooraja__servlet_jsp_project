@@ -11,55 +11,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fssa.books.model.*;
+import com.fssa.books.service.BookService;
 import com.fssa.connection.exception.ConnectionException;
 import com.fssa.books.dao.*;
 import com.fssa.books.exception.BookDAOCRUDException;
+import com.fssa.books.exception.BookDataException;
 
 /**
  * Servlet implementation class EditBookServlet
  */
-@WebServlet("/EditBooksServlet")
+@WebServlet("/EditBookServlet")
 public class EditBookServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+       
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	 // Retrieve the book ID from the request parameter
+    	 
         int bookId = Integer.parseInt(request.getParameter("bookId"));
+        String title = request.getParameter("title");
+        String author = request.getParameter("author");
+        LocalDate publishedDate = LocalDate.parse(request.getParameter("publisheddate"));
+        String publisherName = request.getParameter("publishername");
+        String bookImageUrl = request.getParameter("bookimageurl");
+        int edition = Integer.parseInt(request.getParameter("edition"));
+        String categoryName = request.getParameter("categoryname");
         
-        // Retrieve the updated book details from the form
-        String updatedTitle = request.getParameter("updatedTitle");
-        String updatedAuthor = request.getParameter("updatedAuthor");
-        LocalDate updatedPublishedDate = LocalDate.parse(request.getParameter("publisheddate"));
-        String updatedPublisherName = request.getParameter("publishername");
-        String updatedBookImageUrl = request.getParameter("bookimageurl");
-        int updatededition = Integer.parseInt(request.getParameter("edition"));
-        String updatedCategoryName = request.getParameter("categoryname");
+        BookCategory category=BookCategory.valueOf(categoryName);
         
-        BookCategory category=BookCategory.valueOf(updatedCategoryName);
-        
-        // ... (retrieve other fields as needed)
+        Book book = new Book();
+        book.setId(bookId);
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setPublisheddate(publishedDate);
+        book.setPublishername(publisherName);
+        book.setBookimageurl(bookImageUrl);
+        book.setEdition(edition);
+        book.setCategoryname(category);
+        // Set the book object as an attribute to be used in the JSP
+        BookService bookService= new BookService();
+        try {
+			bookService.updateBooks(book);
+		} catch (BookDataException | BookDAOCRUDException | SQLException | ConnectionException e) {
+			e.printStackTrace();
+		}
 
-        // Create a Book object with the updated details
-        Book updatedBook = new Book();
-        updatedBook.setTitle(updatedTitle);
-        updatedBook.setAuthor(updatedAuthor);
-        updatedBook.setPublisheddate(updatedPublishedDate);
-        updatedBook.setPublishername(updatedPublisherName);
-        updatedBook.setBookimageurl(updatedBookImageUrl);
-        updatedBook.setEdition(updatededition);
-        updatedBook.setCategoryname(category);
-        
-        // Set the bookId in the updatedBook object
-        updatedBook.setId(bookId);
-
-            // Call the updateBooks method with the updatedBook object
-            try {
-				boolean success = BookDao.updateBooks(updatedBook);
-			} 
-			catch (BookDAOCRUDException | ConnectionException|SQLException  e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				response.sendRedirect("booksearch.jsp");
-			}
-
-            
-        }
+        response.sendRedirect("./BookServlet");
+    }
 }
 

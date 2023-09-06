@@ -12,7 +12,7 @@
 <body>
 	<div class="container mt-5">
 		<h1 class="mb-4">Add a New Book</h1>
-		<form action="AddingBookServlet" method="post">
+		<form action="AddBookServlet" method="post">
 			<div class="form-group">
 				<label for="title">Title:</label> <input type="text"
 					class="form-control" id="title" name="title" required>
@@ -42,7 +42,7 @@
 
 			<div class="form-group">
 				<label for="edition">Edition:</label> <input type="number"
-					class="form-control" id="edition" name="edition" required>
+					class="form-control" id="edition" name="edition" required min=1 max=25>
 			</div>
 
 			<div class="form-group">

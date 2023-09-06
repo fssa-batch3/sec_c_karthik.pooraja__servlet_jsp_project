@@ -21,7 +21,7 @@
 				</div>
 			</div>
 		</form>
-		
+
 
 		<h3>List of books</h3>
 
@@ -64,77 +64,104 @@
 					<p class="card-text">
 						Category:
 						<%=book.getCategoryname()%></p>
-					 <!-- Update Button -->
-        <form action="UpdateBookServlet" method="post" class="d-inline">
-            <input type="hidden" name="bookId" value="<%=book.getId()%>">
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+					<!-- Update Button -->
+					
+						<input type="hidden" name="bookId" value="<%=book.getId()%>">
+						<button type="button" class="btn btn-primary update-button"
+							data-toggle="modal" data-target="#updateModal<%=book.getId()%>">Update</button>
 
-        <!-- Delete Button -->
-        <form action="DeleteBookServlet" method="post" class="d-inline">
-            <input type="hidden" name="bookId" value="<%=book.getId()%>">
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-        
-        <!-- Add an update form (hidden by default) -->
-        <form action="EditBookServlet" method="post" class="update-form">
-            <input type="hidden" name="bookId" value="<%=book.getId()%>">
-            <div class="form-group">
-				<label for="title">Title:</label> <input type="text"
-					class="form-control" id="title" name="title" required>
-			</div>
+					<!-- Delete Button -->
+					<form action="DeleteBookServlet" method="post" class="d-inline">
+						<input type="hidden" name="bookId" value="<%=book.getId()%>">
+						<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
 
-			<div class="form-group">
-				<label for="author">Author:</label> <input type="text"
-					class="form-control" id="author" name="author" required>
-			</div>
+					<!-- Add an update form (hidden by default) -->
+					<div class="modal fade" id="updateModal<%=book.getId()%>"
+						tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form action="./EditBookServlet" method="post">
+									<div class="modal-header">
+										<h5 class="modal-title" id="updateModalLabel">Update Book</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<input type="hidden" name="bookId" value="<%=book.getId()%>">
+										<div class="form-group">
+											<label for="title">Title:</label> <input type="text"
+												class="form-control" id="title" name="title"
+												value="<%=book.getTitle()%>" required>
+										</div>
+										<div class="form-group">
+											<label for="author">Author:</label> <input type="text"
+												class="form-control" id="author" name="author"
+												value="<%=book.getAuthor()%>" required>
+										</div>
 
-			<div class="form-group">
-				<label for="publisheddate">Published Date:</label> <input
-					type="date" class="form-control" id="publisheddate"
-					name="publisheddate" required>
-			</div>
+										<div class="form-group">
+											<label for="publisheddate">Published Date:</label> <input
+												type="date" class="form-control" id="publisheddate"
+												name="publisheddate" value="<%=book.getPublisheddate()%>"
+												required>
+										</div>
 
-			<div class="form-group">
-				<label for="publishername">Publisher Name:</label> <input
-					type="text" class="form-control" id="publishername"
-					name="publishername" required>
-			</div>
+										<div class="form-group">
+											<label for="publishername">Publisher Name:</label> <input
+												type="text" class="form-control" id="publishername"
+												name="publishername" value="<%=book.getPublishername()%>"
+												required>
+										</div>
 
-			<div class="form-group">
-				<label for="bookimageurl">Book Image URL:</label> <input type="text"
-					class="form-control" id="bookimageurl" name="bookimageurl" required>
-			</div>
+										<div class="form-group">
+											<label for="bookimageurl">Book Image URL:</label> <input
+												type="text" class="form-control" id="bookimageurl"
+												name="bookimageurl" value="<%=book.getBookimageurl()%>"
+												required>
+										</div>
 
-			<div class="form-group">
-				<label for="edition">Edition:</label> <input type="number"
-					class="form-control" id="edition" name="edition" required>
-			</div>
+										<div class="form-group">
+											<label for="edition">Edition:</label> <input type="number"
+												class="form-control" id="edition" name="edition"
+												value="<%=book.getEdition()%>" required>
+										</div>
 
-			<div class="form-group">
-				<label for="categoryname">Category Name:</label> <input type="text"
-					class="form-control" id="categoryname" name="categoryname" required>
-			</div>
-            
-            <button type="submit" class="btn btn-success">Save Changes</button>
-        </form>
-      
+										<div class="form-group">
+											<label for="categoryname">Category Name:</label> <input
+												type="text" class="form-control" id="categoryname"
+												name="categoryname" value="<%=book.getCategoryname()%>"
+												required>
+										</div>
+									</div>
+									<div class="modal-footer">
+										
+										<button type="submit" class="btn btn-success">Save
+											Changes</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
+				<%
+				}
+				%>
 			</div>
 			<%
 			}
 			%>
-		</div>
-		<%
-		}
-		%>
-	</div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		</div>
+</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<script>
     // Get all elements with the class "update-form"
     const updateForms = document.querySelectorAll('.update-form');
@@ -153,6 +180,5 @@
         });
     });
 </script>
-		
 </body>
 </html>

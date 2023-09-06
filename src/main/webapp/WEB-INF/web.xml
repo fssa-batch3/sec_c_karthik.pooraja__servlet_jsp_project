@@ -23,16 +23,9 @@
   	<servlet-class>com.fssa.lms.servlet.EditBookServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>BookServlet</servlet-name>
-  	<url-pattern>/BookServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>AddBookServlet</servlet-name>
-  	<url-pattern>/AddBookServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>EditBookServlet</servlet-name>
-  	<url-pattern>/EditBookServlet</url-pattern>
-  </servlet-mapping>
+    <servlet-name>BookServlet</servlet-name>
+    <url-pattern>/bookservlet</url-pattern>
+</servlet-mapping>
+  
 
 </web-app>

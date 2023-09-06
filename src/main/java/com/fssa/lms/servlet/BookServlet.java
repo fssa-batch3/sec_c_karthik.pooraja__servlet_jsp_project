@@ -21,7 +21,7 @@ import com.fssa.connection.exception.ConnectionException;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/bookservlet")
+@WebServlet("/BookServlet")
 public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +49,7 @@ public class BookServlet extends HttpServlet {
 	        request.setAttribute("errorMessage", e.getMessage());
 	    }
 	   RequestDispatcher dis = request.getRequestDispatcher(BOOK_SERACH_JSP);
+	   
 	   dis.forward(request, response);
 	}
 
