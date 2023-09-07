@@ -12,16 +12,32 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
     <div class="container">
         <!-- Search Form -->
-        <form action="<%=request.getContextPath()%>/bookservlet" method="get">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search by category" name="bookcat">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
-            </div>
-        </form>
+        <form action="BookServlet" method="get">
+    <div class="input-group mb-3">
+        <select class="form-control" name="bookcat">
+            <option value="" selected disabled>Select a category</option>
+            <option value="FICTION">FICTION</option>
+            <option value="NON_FICTION">NON_FICTION</option>
+            <option value="SCIENCE_FICTION">SCIENCE_FICTION</option>
+            <option value="MYSTERY">MYSTERY</option>
+            <option value="ROMANCE">ROMANCE</option>
+            <option value="FANTASY">FANTASY</option>
+            <option value="THRILLER">THRILLER</option>
+            <option value="HORROR">HORROR</option>
+            <option value="HISTORY">HISTORY</option>
+            <option value="BIOGRAPHY">BIOGRAPHY</option>
+            <option value="SELF_HELP">SELF_HELP</option>
+            <option value="POETRY">POETRY</option>
+            <option value="OTHER">OTHER</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
 
         <h3>List of books</h3>
 
@@ -130,11 +146,25 @@
 										</div>
 
 										<div class="form-group">
-											<label for="categoryname">Category Name:</label> <input
-												type="text" class="form-control" id="categoryname"
-												name="categoryname" value="<%=book.getCategoryname()%>"
-												required>
-										</div>
+    <label for="categoryname">Category Name:</label>
+    <select class="form-control" id="categoryname" name="categoryname" required>
+        <option value="" selected disabled>Select a category</option>
+        <option value="FICTION" <% if ("FICTION".equals(book.getCategoryname())) { %>selected<% } %>>FICTION</option>
+        <option value="NON_FICTION" <% if ("NON_FICTION".equals(book.getCategoryname())) { %>selected<% } %>>NON_FICTION</option>
+        <option value="SCIENCE_FICTION" <% if ("SCIENCE_FICTION".equals(book.getCategoryname())) { %>selected<% } %>>SCIENCE_FICTION</option>
+        <option value="MYSTERY" <% if ("MYSTERY".equals(book.getCategoryname())) { %>selected<% } %>>MYSTERY</option>
+        <option value="ROMANCE" <% if ("ROMANCE".equals(book.getCategoryname())) { %>selected<% } %>>ROMANCE</option>
+        <option value="FANTASY" <% if ("FANTASY".equals(book.getCategoryname())) { %>selected<% } %>>FANTASY</option>
+        <option value="THRILLER" <% if ("THRILLER".equals(book.getCategoryname())) { %>selected<% } %>>THRILLER</option>
+        <option value="HORROR" <% if ("HORROR".equals(book.getCategoryname())) { %>selected<% } %>>HORROR</option>
+        <option value="HISTORY" <% if ("HISTORY".equals(book.getCategoryname())) { %>selected<% } %>>HISTORY</option>
+        <option value="BIOGRAPHY" <% if ("BIOGRAPHY".equals(book.getCategoryname())) { %>selected<% } %>>BIOGRAPHY</option>
+        <option value="SELF_HELP" <% if ("SELF_HELP".equals(book.getCategoryname())) { %>selected<% } %>>SELF_HELP</option>
+        <option value="POETRY" <% if ("POETRY".equals(book.getCategoryname())) { %>selected<% } %>>POETRY</option>
+        <option value="OTHER" <% if ("OTHER".equals(book.getCategoryname())) { %>selected<% } %>>OTHER</option>
+    </select>
+</div>
+										
 									</div>
 									<div class="modal-footer">
 										

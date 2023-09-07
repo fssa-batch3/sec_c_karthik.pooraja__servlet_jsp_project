@@ -26,36 +26,43 @@ import com.fssa.connection.exception.ConnectionException;
 public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String BOOK_SERACH_JSP = "/booksearch.jsp";
-	private static final String ADD_BOOKS = "/addbooksform.jsp";
+	//private static final String BOOK_SEARCH_JSP = "./booksearch.jsp";
 
 	// Inside your servlet's doGet method
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String categoryName = request.getParameter("bookcat");
+		    throws ServletException, IOException {
 
-		try {
-			List<Book> bookList;
+		    String categoryName = request.getParameter("bookcat");
+		    String id = request.getParameter("id");
+		    
 
-			if (categoryName != null && !categoryName.isEmpty()) {
-				// User entered a specific category, fetch books in that category
-				bookList = BookService.getAllBookByCategory(categoryName);
-			} else {
-				// Show all books
-				bookList = BookService.readBooks();
-			}
+		    try {
+		        List<Book> bookList;
 
-			request.setAttribute("bookList", bookList);
+		        if (categoryName != null && !categoryName.isEmpty()) {
+		            // User entered a specific category, fetch books in that category
+		            bookList = BookService.getAllBookByCategory(categoryName);
+		        } 
+		        else {
+		            // Show all books
+		            bookList = BookService.readBooks();
 
-		} catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
-			request.setAttribute("errorMessage", e.getMessage());
-			RequestDispatcher dispatcher = request.getRequestDispatcher(ADD_BOOKS);
-			dispatcher.forward(request, response);
+		        }
 
+		        request.setAttribute("bookList", bookList);
+
+		        if (id == null) {
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/booksearch.jsp");
+					 dispatcher.include(request, response);
+				} else {
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/UserList.jsp");
+					dispatcher.include(request, response);
+				}
+
+		    } catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
+		        e.getMessage();
+		    }
 		}
-		RequestDispatcher dis = request.getRequestDispatcher(BOOK_SERACH_JSP);
 
-		dis.forward(request, response);
-	}
 
 }
