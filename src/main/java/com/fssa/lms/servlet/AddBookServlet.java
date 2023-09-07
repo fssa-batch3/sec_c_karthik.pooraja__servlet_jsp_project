@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,7 @@ import com.fssa.books.exception.BookDataException;
 @WebServlet("/AddBookServlet")
 public class AddBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ADD_BOOKS = "/addbooksform.jsp";
        
 
 	/**
@@ -70,9 +72,9 @@ public class AddBookServlet extends HttpServlet {
 	                  response.sendRedirect("addbooksform.jsp");
 	              }
 	          } catch (SQLException|ConnectionException|BookDataException|BookDAOCRUDException e) {
-	              e.printStackTrace();
-	              // Handle database-related errors
-	              response.sendRedirect("addbooksform.jsp");
+	        	  request.setAttribute("errorMessage", e.getMessage());
+	  	        RequestDispatcher dispatcher = request.getRequestDispatcher(ADD_BOOKS);
+	  	        dispatcher.forward(request, response);
 	          }
 	          
 	     

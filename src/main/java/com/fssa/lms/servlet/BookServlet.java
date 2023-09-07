@@ -3,6 +3,7 @@ package com.fssa.lms.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -25,33 +26,36 @@ import com.fssa.connection.exception.ConnectionException;
 public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String BOOK_SERACH_JSP = "booksearch.jsp";
+	private static final String BOOK_SERACH_JSP = "/booksearch.jsp";
+	private static final String ADD_BOOKS = "/addbooksform.jsp";
+
 	// Inside your servlet's doGet method
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    String categoryName = request.getParameter("bookcat");
+			throws ServletException, IOException {
+		String categoryName = request.getParameter("bookcat");
 
-	    try {
-	        List<Book> bookList;
+		try {
+			List<Book> bookList;
 
-	        if (categoryName != null && !categoryName.isEmpty()) {
-	            // User entered a specific category, fetch books in that category
-	            bookList = BookService.getAllBookByCategory(categoryName);
-	        } else {
-	            // Show all books
-	            bookList = BookService.readBooks();
-	        }
+			if (categoryName != null && !categoryName.isEmpty()) {
+				// User entered a specific category, fetch books in that category
+				bookList = BookService.getAllBookByCategory(categoryName);
+			} else {
+				// Show all books
+				bookList = BookService.readBooks();
+			}
 
-	        request.setAttribute("bookList", bookList);
-	        } 
-	    catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
-	        
-	        request.setAttribute("errorMessage", e.getMessage());
-	    }
-	   RequestDispatcher dis = request.getRequestDispatcher(BOOK_SERACH_JSP);
-	   
-	   dis.forward(request, response);
+			request.setAttribute("bookList", bookList);
+
+		} catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
+			request.setAttribute("errorMessage", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher(ADD_BOOKS);
+			dispatcher.forward(request, response);
+
+		}
+		RequestDispatcher dis = request.getRequestDispatcher(BOOK_SERACH_JSP);
+
+		dis.forward(request, response);
 	}
-
 
 }

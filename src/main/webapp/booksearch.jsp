@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.fssa.books.model.Book"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.time.LocalDate" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,60 +12,56 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container">
-		<form action="<%=request.getContextPath()%>/bookservlet" method="get">
-			<div class="input-group mb-3">
-				<input type="text" class="form-control"
-					placeholder="Search by category" name="bookcat">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="submit">Search</button>
-				</div>
-			</div>
-		</form>
+    <div class="container">
+        <!-- Search Form -->
+        <form action="<%=request.getContextPath()%>/bookservlet" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search by category" name="bookcat">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
 
+        <h3>List of books</h3>
 
-		<h3>List of books</h3>
+        <!-- Display Error Message if Present -->
+        <%
+        String errorMessage = request.getParameter("errorMessage");
+        if (errorMessage != null) {
+        %>
+        <h3><%=errorMessage%></h3>
+        <%
+        }
+        %>
 
-		<%
-		String errorMessage = request.getParameter("errorMessage");
+        <!-- Get Current Date -->
+        <%
+        LocalDate date = LocalDate.now();
+        String todayDate = date.toString();
+        %>
 
-		if (errorMessage != null) {
-		%>
-		<h3><%=errorMessage%></h3>
-		<%
-		}
-		%>
-
-		<%
-		List<Book> bookList = (List<Book>) request.getAttribute("bookList");
-
-		if (bookList != null && !bookList.isEmpty()) {
-		%>
-		<div class="card-deck">
-			<%
-			for (Book book : bookList) {
-			%>
-			<div class="card">
-				<img class="card-img-top" src="<%=book.getBookimageurl()%>"
-					alt="<%=book.getTitle()%>">
-				<div class="card-body">
-					<h5 class="card-title"><%=book.getTitle()%></h5>
-					<p class="card-text">
-						Author:
-						<%=book.getAuthor()%></p>
-					<p class="card-text">
-						Publisher:
-						<%=book.getPublishername()%></p>
-					<p class="card-text">
-						Edition:
-						<%=book.getEdition()%></p>
-					<p class="card-text">
-						Publish Date:
-						<%=book.getPublisheddate()%></p>
-					<p class="card-text">
-						Category:
-						<%=book.getCategoryname()%></p>
-					<!-- Update Button -->
+        <!-- Display List of Books -->
+        <%
+        List<Book> bookList = (List<Book>) request.getAttribute("bookList");
+        if (bookList != null && !bookList.isEmpty()) {
+        %>
+        <div class="card-deck">
+            <%
+            for (Book book : bookList) {
+            %>
+            <!-- Individual Book Card -->
+            <div class="card">
+                <img class="card-img-top" src="<%=book.getBookimageurl()%>" alt="<%=book.getTitle()%>">
+                <div class="card-body">
+                    <h5 class="card-title"><%=book.getTitle()%></h5>
+                    <p class="card-text">Author: <%=book.getAuthor()%></p>
+                    <p class="card-text">Publisher: <%=book.getPublishername()%></p>
+                    <p class="card-text">Edition: <%=book.getEdition()%></p>
+                    <p class="card-text">Publish Date: <%=book.getPublisheddate()%></p>
+                    <p class="card-text">Category: <%=book.getCategoryname()%></p>
+                    
+                    	<!-- Update Button -->
 					
 						<input type="hidden" name="bookId" value="<%=book.getId()%>">
 						<button type="button" class="btn btn-primary update-button"
@@ -75,6 +72,8 @@
 						<input type="hidden" name="bookId" value="<%=book.getId()%>">
 						<button type="submit" class="btn btn-danger">Delete</button>
 					</form>
+					</div>
+					</div>
 
 					<!-- Add an update form (hidden by default) -->
 					<div class="modal fade" id="updateModal<%=book.getId()%>"
@@ -106,7 +105,7 @@
 										<div class="form-group">
 											<label for="publisheddate">Published Date:</label> <input
 												type="date" class="form-control" id="publisheddate"
-												name="publisheddate" value="<%=book.getPublisheddate()%>"
+												name="publisheddate" max="<%=todayDate %>" value="<%=book.getPublisheddate()%>"
 												required>
 										</div>
 
@@ -146,39 +145,41 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<%
-				}
-				%>
-			</div>
-			<%
-			}
-			%>
+            <!-- End of Update Modal -->
+            <%
+            }
+            %>
+        </div>
+        <!-- End of Card Deck -->
+        <%
+        }
+        %>
+    </div>
 
-		</div>
-</div>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script>
-    // Get all elements with the class "update-form"
-    const updateForms = document.querySelectorAll('.update-form');
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    // Add an event listener to each "Update" button
-    updateForms.forEach(form => {
-        const updateButton = form.querySelector('.btn-primary');
-        const cancelButton = form.querySelector('.btn-success');
+    <!-- JavaScript for Modal Display -->
+    <script>
+        // Get all elements with the class "update-form"
+        const updateForms = document.querySelectorAll('.update-form');
 
-        updateButton.addEventListener('click', () => {
-            form.style.display = 'block';
+        // Add an event listener to each "Update" button
+        updateForms.forEach(form => {
+            const updateButton = form.querySelector('.btn-primary');
+            const cancelButton = form.querySelector('.btn-success');
+
+            updateButton.addEventListener('click', () => {
+                form.style.display = 'block';
+            });
+
+            cancelButton.addEventListener('click', () => {
+                form.style.display = 'none';
+            });
         });
-
-        cancelButton.addEventListener('click', () => {
-            form.style.display = 'none';
-        });
-    });
-</script>
+    </script>
 </body>
+
 </html>
