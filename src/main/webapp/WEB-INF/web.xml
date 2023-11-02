@@ -5,25 +5,7 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   
-  <!-- Remove the servlet mapping for BookServlet from web.xml -->
-  <servlet>
-    <servlet-name>BookServlet</servlet-name>
-    <display-name>BookServlet</display-name>
-    <description></description>
-    <servlet-class>com.fssa.lms.servlet.BookServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>AddBookServlet</servlet-name>
-    <display-name>AddBookServlet</display-name>
-    <description></description>
-    <servlet-class>com.fssa.lms.servlet.AddBookServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>EditBookServlet</servlet-name>
-    <display-name>EditBookServlet</display-name>
-    <description></description>
-    <servlet-class>com.fssa.lms.servlet.EditBookServlet</servlet-class>
-  </servlet>
+
 
 </web-app>
 

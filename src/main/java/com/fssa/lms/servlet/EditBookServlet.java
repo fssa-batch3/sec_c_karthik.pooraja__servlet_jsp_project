@@ -15,7 +15,7 @@ import com.fssa.books.service.BookService;
 import com.fssa.connection.exception.ConnectionException;
 import com.fssa.books.dao.*;
 import com.fssa.books.exception.BookDAOCRUDException;
-import com.fssa.books.exception.BookDataException;
+import com.fssa.books.exception.DataException;
 
 /**
  * EditBookServlet handles the editing of book information through a POST request.
@@ -37,7 +37,7 @@ public class EditBookServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+       doPost(request,response);
     }
 
     /**
@@ -61,6 +61,7 @@ public class EditBookServlet extends HttpServlet {
         String bookImageUrl = request.getParameter("bookimageurl");
         int edition = Integer.parseInt(request.getParameter("edition"));
         String categoryName = request.getParameter("categoryname");
+        int stock = Integer.parseInt(request.getParameter("stock"));
         
         BookCategory category = BookCategory.valueOf(categoryName);
         
@@ -73,12 +74,13 @@ public class EditBookServlet extends HttpServlet {
         book.setBookimageurl(bookImageUrl);
         book.setEdition(edition);
         book.setCategoryname(category);
-        
+        book.setStock(stock);
+         
         // Set the book object as an attribute to be used in the JSP
         BookService bookService = new BookService();
         try {
             bookService.updateBooks(book);
-        } catch (BookDataException | BookDAOCRUDException | SQLException | ConnectionException e) {
+        } catch (DataException | BookDAOCRUDException | SQLException | ConnectionException e) {
             e.printStackTrace();
         }
 

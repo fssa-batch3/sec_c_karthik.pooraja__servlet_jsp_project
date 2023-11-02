@@ -12,10 +12,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fssa.books.exception.BookDAOCRUDException;
-import com.fssa.books.exception.BookDataException;
+import com.fssa.books.exception.DataException;
 import com.fssa.books.model.Book;
+import com.fssa.books.model.User;
 import com.fssa.books.service.BookService;
 import com.fssa.connection.exception.ConnectionException;
 
@@ -33,11 +35,14 @@ public class BookServlet extends HttpServlet {
 		    throws ServletException, IOException {
 
 		    String categoryName = request.getParameter("bookcat");
-		    String id = request.getParameter("id");
+		    HttpSession session = request.getSession();
+		    User user=(User)session.getAttribute("user");
+		    String role=user.getRole().toString();
+		    
 		    
 
 		    try {
-		        List<Book> bookList;
+		    	List<Book> bookList;
 
 		        if (categoryName != null && !categoryName.isEmpty()) {
 		            // User entered a specific category, fetch books in that category
@@ -51,15 +56,17 @@ public class BookServlet extends HttpServlet {
 
 		        request.setAttribute("bookList", bookList);
 
-		        if (id == null) {
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/booksearch.jsp");
+		        if (role.equals("LIBRARIAN")) {
+		        	RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/booksearch.jsp");
 					 dispatcher.include(request, response);
-				} else {
+		        					
+				}
+		        else {
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/UserList.jsp");
-					dispatcher.include(request, response);
+					dispatcher.include(request, response);	
 				}
 
-		    } catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
+		    } catch (SQLException | DataException | BookDAOCRUDException | ConnectionException e) {
 		        e.getMessage();
 		    }
 		}

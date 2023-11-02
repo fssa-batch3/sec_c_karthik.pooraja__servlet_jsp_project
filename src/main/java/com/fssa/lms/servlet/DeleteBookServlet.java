@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fssa.books.exception.BookDAOCRUDException;
-import com.fssa.books.exception.BookDataException;
+import com.fssa.books.exception.DataException;
 import com.fssa.books.service.BookService;
 import com.fssa.connection.exception.ConnectionException;
 
@@ -41,7 +41,7 @@ public class DeleteBookServlet extends HttpServlet {
 				response.sendRedirect("BookServlet");
 			}
 
-		} catch (SQLException | BookDataException | BookDAOCRUDException | ConnectionException e) {
+		} catch (SQLException | DataException | BookDAOCRUDException | ConnectionException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}

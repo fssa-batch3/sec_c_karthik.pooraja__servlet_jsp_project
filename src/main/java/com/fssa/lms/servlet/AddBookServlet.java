@@ -16,7 +16,7 @@ import com.fssa.books.service.BookService;
 import com.fssa.connection.exception.ConnectionException;
 import com.fssa.books.dao.*;
 import com.fssa.books.exception.BookDAOCRUDException;
-import com.fssa.books.exception.BookDataException;
+import com.fssa.books.exception.DataException;
 /**
  * Servlet implementation class AddBookServlet
  */
@@ -46,6 +46,7 @@ public class AddBookServlet extends HttpServlet {
 	          String bookImageUrl = request.getParameter("bookimageurl");
 	          int edition = Integer.parseInt(request.getParameter("edition"));
 	          String categoryName = request.getParameter("categoryname");
+	          int stock=Integer.parseInt(request.getParameter("stock"));
 	          
 	          BookCategory category=BookCategory.valueOf(categoryName);
 
@@ -58,6 +59,7 @@ public class AddBookServlet extends HttpServlet {
 	          book.setBookimageurl(bookImageUrl);
 	          book.setEdition(edition);
 	          book.setCategoryname(category);
+	          book.setStock(stock);
 
 
 	          try {
@@ -71,7 +73,7 @@ public class AddBookServlet extends HttpServlet {
 	                  // Handle the case where book insertion fails
 	                  response.sendRedirect("addbooksform.jsp");
 	              }
-	          } catch (SQLException|ConnectionException|BookDataException|BookDAOCRUDException e) {
+	          } catch (SQLException|ConnectionException|DataException|BookDAOCRUDException e) {
 	        	  request.setAttribute("errorMessage", e.getMessage());
 	  	        RequestDispatcher dispatcher = request.getRequestDispatcher(ADD_BOOKS);
 	  	        dispatcher.forward(request, response);
