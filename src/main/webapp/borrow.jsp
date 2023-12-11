@@ -76,10 +76,10 @@
 							<%=transferStatus%>
 							<!-- Button for rejecting the request -->
 							<button class="btn btn-danger" type="submit" name="newStatus"
-								value="REJECTED">Rejected</button>
+								value="REJECTED">Reject</button>
 							<!-- Button for accepting the request -->
 							<button class="btn btn-primary" type="submit" name="newStatus"
-								value="ACCEPTED">Accepted</button>
+								value="ACCEPTED">Accept</button>
 
 							
 						</form> <%

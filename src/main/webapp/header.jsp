@@ -42,9 +42,6 @@
             <a class="nav-link" href="return.jsp" style="color: #fff; font-weight: bold;">Returns</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="ProfileServlet?email=<%=email%> %>" style="color: #fff; font-weight: bold;"><%=name %></a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="LogOutServlet" style="color: #fff; font-weight: bold;">Logout</a>
           </li>
           </ul>
@@ -58,9 +55,6 @@
           </li>
            <li class="nav-item">
             <a class="nav-link" href="return.jsp" style="color: #fff; font-weight: bold;">Returns</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="ProfileServlet?email=<%=email%>" style="color: #fff; font-weight: bold;"><%=name%></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="LogOutServlet" style="color: #fff; font-weight: bold;">Logout</a>

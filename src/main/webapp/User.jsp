@@ -213,7 +213,7 @@ body {
 
 		<div id="login-form">
 			<form action="LoginServlet" method="post">
-				<input type="text" placeholder="Enter email or username" name="email" required />
+				<input type="text" placeholder="Enter email or username" name="email"  required />
 				<input type="password" placeholder="Enter password" name="password" required />
 				<button type="submit" class="btn login">login</button>
 			</form>
@@ -221,9 +221,9 @@ body {
 
 		<div id="signup-form">
 				<form action="AddUserServlet" method ="post">
-				     <input type="text" name="name" placeholder="Choose username" required/> 
-					<input type="email" name="email" placeholder="Enter your email" required/> 
-					<input type="password" name="password" placeholder="Create password" required/> 
+				     <input type="text" name="name" placeholder="Choose username"  required/> 
+					<input type="email" name="email" placeholder="Enter your email"  required/> 
+					<input type="password" name="password" placeholder="Create password"  required/> 
 					<input type="tel" name="phoneNumber" placeholder=" Phone number" required/>
 					<button type="submit" class="btn signup" >create account</button>
 				</form>

@@ -110,7 +110,7 @@
 							<!-- Input field for the new stock value -->
 							<div class="form-group">
 								<label for="newStock">New Stock:</label> <input type="number"
-									id="newStock" name="newStock" class="form-control" value="<%=book.getStock()%>" required>
+									id="newStock" name="newStock" class="form-control" min=0  value="<%=book.getStock()%>" required>
 							</div>
 							<!-- Submit button -->
 							<button type="submit" class="btn btn-primary">Update
